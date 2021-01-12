@@ -31,13 +31,18 @@ jobs:
       - run: cp .env.example .env
       - run: php artisan key:generate
 
-      - run: ./vendor/bin/php-cs-fixer fix .
-      - run: |
-          git config user.email "noreply@gaan.dev"
-          git config user.name "CircleCI"
-          git add .
-          git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
-          git push --set-upstream origin ${CIRCLE_BRANCH}
+      - run:
+          name: Running PHP CS Fixer
+          command: ./vendor/bin/php-cs-fixer fix .
+
+      - run:
+          name: Committing changes
+          command: |
+            git config user.email "noreply@gaan.dev"
+            git config user.name "CircleCI"
+            git add .
+            git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
+            git push --set-upstream origin ${CIRCLE_BRANCH}
 
   test:
     docker:
