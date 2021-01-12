@@ -39,12 +39,19 @@ jobs:
           paths:
             - ./vendor
       # prepare the database
-      # - run: touch storage/testing.sqlite
-      # - run: php artisan migrate --env=testing --database=sqlite_testing --force
       - run: cp .env.example .env
       - run: php artisan key:generate
 
       # run tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit
-      # - run: ./vendor/bin/codecept build
-      # - run: ./vendor/bin/codecept run
+      - run:
+        command: |
+          mkdir -p ~/phpunit
+          ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml tests
+        when: always
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+      # - run: ./vendor/bin/phpunit
+      # - store_test_results:
