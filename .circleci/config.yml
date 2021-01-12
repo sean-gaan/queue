@@ -41,8 +41,8 @@ jobs:
             git config user.email "noreply@gaan.dev"
             git config user.name "CircleCI"
             git add .
-            if git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
-              exit 0
+            if git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"; then
+              circleci step halt
             fi
             git push --set-upstream origin ${CIRCLE_BRANCH}
 
