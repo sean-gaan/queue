@@ -44,10 +44,10 @@ jobs:
 
       # run tests with phpunit or codecept
       - run:
-        command: |
-          mkdir -p ~/phpunit
-          ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml tests
-        when: always
+          command: |
+            mkdir -p ~/phpunit
+            ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml tests
+          when: always
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:
