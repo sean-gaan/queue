@@ -14,7 +14,8 @@ class SPAJobTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function an_authenticated_user_can_see_a_list_of_their_jobs(){
+    public function an_authenticated_user_can_see_a_list_of_their_jobs()
+    {
         // Set up the test
         $user = signIn();
         $jobs = Job::factory()->count(3)->create(['uploader_id' => $user->id]);
@@ -23,13 +24,14 @@ class SPAJobTest extends TestCase
         $response = $this->json('GET', 'api/jobs');
 
         // Check the results
-        foreach($jobs as $job){
+        foreach ($jobs as $job) {
             $response->assertSee($job->name);
         }
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_see_anyone_elses_jobs(){
+    public function an_authenticated_user_cannot_see_anyone_elses_jobs()
+    {
         // Set up the test
         $unauthenticated_user = User::factory()->create();
         $unauthenticated_jobs = Job::factory()->count(3)->create(['uploader_id' => $unauthenticated_user->id]);
@@ -39,13 +41,14 @@ class SPAJobTest extends TestCase
         $response = $this->json('GET', 'api/jobs');
 
         // Check the results
-        foreach($unauthenticated_jobs as $job){
+        foreach ($unauthenticated_jobs as $job) {
             $response->assertDontSee($job->name);
         }
     }
 
     /** @test */
-    public function an_authenticated_user_can_see_the_specific_details_of_one_job(){
+    public function an_authenticated_user_can_see_the_specific_details_of_one_job()
+    {
         // Set up the test
         $user = signIn();
         $job = Job::factory()->create(['uploader_id' => $user->id]);
@@ -58,7 +61,8 @@ class SPAJobTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_see_the_specific_details_of_someone_elses_job(){
+    public function an_authenticated_user_cannot_see_the_specific_details_of_someone_elses_job()
+    {
         // Set up the test
         $user = signIn();
         $unauthenticated_user = User::factory()->create();
@@ -101,7 +105,8 @@ class SPAJobTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_update_their_own_job(){
+    public function an_authenticated_user_can_update_their_own_job()
+    {
         // Set up the test
         $user = signIn();
         $job = Job::factory()->create(['uploader_id' => $user->id]);
@@ -115,7 +120,8 @@ class SPAJobTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_update_anyone_elses_job(){
+    public function an_authenticated_user_cannot_update_anyone_elses_job()
+    {
         // Set up the test
         $job = Job::factory()->create();
         $user = signIn();
@@ -130,7 +136,8 @@ class SPAJobTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_remove_their_own_job(){
+    public function an_authenticated_user_can_remove_their_own_job()
+    {
         // Set up the test
         $user = signIn();
         $job = Job::factory()->create(['uploader_id' => $user->id]);
@@ -143,7 +150,8 @@ class SPAJobTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_remove_someone_elses_job(){
+    public function an_authenticated_user_cannot_remove_someone_elses_job()
+    {
         // Set up the test
         $job = Job::factory()->create();
         $user = signIn();

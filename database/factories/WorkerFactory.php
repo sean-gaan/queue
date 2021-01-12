@@ -25,7 +25,7 @@ class WorkerFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'owner_id' => function(){
+            'owner_id' => function () {
                 return User::factory()->create()->id;
             }
         ];

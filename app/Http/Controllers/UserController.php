@@ -21,7 +21,7 @@ class UserController extends Controller
             'name'
         ]));
 
-        if($request->password){
+        if ($request->password) {
             $request->user()->password = bcrypt($request->password);
             $request->user()->save();
         }

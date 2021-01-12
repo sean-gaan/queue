@@ -3,12 +3,13 @@
 use Laravel\Sanctum\Sanctum;
 use App\Models\User;
 
-function signIn($user = null){
-	if(is_null($user)){
-		$user = User::factory()->create();
-	}
+function signIn($user = null)
+{
+    if (is_null($user)) {
+        $user = User::factory()->create();
+    }
 
-	Sanctum::actingAs(
+    Sanctum::actingAs(
         $user,
         ['*']
     );
