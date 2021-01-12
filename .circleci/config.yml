@@ -95,10 +95,10 @@ workflows:
   version: 2
   fix_and_test:
     jobs:
-      - fix:
-        filters:
-          branches:
-            ignore:
+      - fix
+        filters
+          branches
+            ignore
               - master
               - staging
       - test
