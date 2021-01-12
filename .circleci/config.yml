@@ -33,11 +33,11 @@ jobs:
 
       - run: ./vendor/bin/php-cs-fixer fix .
       - run: |
-        git config user.email "noreply@gaan.dev"
-        git config user.name "CircleCI"
-        git add .
-        git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
-        git push --set-upstream origin ${CIRCLE_BRANCH}
+          git config user.email "noreply@gaan.dev"
+          git config user.name "CircleCI"
+          git add .
+          git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
+          git push --set-upstream origin ${CIRCLE_BRANCH}
 
   test:
     docker:
