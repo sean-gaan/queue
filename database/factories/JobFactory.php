@@ -27,11 +27,11 @@ class JobFactory extends Factory
     {
         $user = User::factory()->create()->id;
         return [
-            'file_url' => $this->faker->imageUrl(400,400),
+            'file_url' => $this->faker->imageUrl(400, 400),
             'name' => $this->faker->word,
             'time_in_seconds' => $this->faker->numberBetween(300, 999999),
             'uploader_id' => $user,
-            'collection_id' => function() use ($user){
+            'collection_id' => function () use ($user) {
                 return Collection::factory()->create(['creator_id' => $user]);
             },
             'start_at' => $this->faker->dateTimeBetween(Carbon::now(), Carbon::now()->addWeek(1)),

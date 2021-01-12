@@ -5,58 +5,60 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Worker;
 
-class WorkerController extends Controller{
-	public function index(Request $request)
+class WorkerController extends Controller
+{
+    public function index(Request $request)
     {
-    	return success($request->user()->workers);
+        return success($request->user()->workers);
     }
 
-    public function show($worker, Request $request){
-    	$worker = $request->user()->workers()->where('id', $worker)->first();
-    	if(is_null($worker)){
-    		return failure([], 404);
-    	}
-    	return success($worker);
+    public function show($worker, Request $request)
+    {
+        $worker = $request->user()->workers()->where('id', $worker)->first();
+        if (is_null($worker)) {
+            return failure([], 404);
+        }
+        return success($worker);
     }
 
     public function store(Request $request)
     {
-    	$request->validate([
-    		'name' => ['required'],
-      	]);
+        $request->validate([
+            'name' => ['required'],
+          ]);
 
-    	$worker = $request->user()->workers()->create($request->only(['name']));
+        $worker = $request->user()->workers()->create($request->only(['name']));
 
-    	return success($worker->toArray());
+        return success($worker->toArray());
     }
 
     public function update($worker, Request $request)
     {
-    	$request->validate([
-    		'name' => ['sometimes']
-    	]);
+        $request->validate([
+            'name' => ['sometimes']
+        ]);
 
-    	$worker = $request->user()->workers()->where('id', $worker)->first();
+        $worker = $request->user()->workers()->where('id', $worker)->first();
 
-    	if(is_null($worker)){
-    		return failure([], 404);
-    	}
+        if (is_null($worker)) {
+            return failure([], 404);
+        }
 
-    	$worker->update($request->only(['name', 'color']));
+        $worker->update($request->only(['name', 'color']));
 
-    	return success($worker->refresh()->toArray());
+        return success($worker->refresh()->toArray());
     }
 
     public function destroy($worker, Request $request)
     {
-    	$worker = $request->user()->workers()->where('id', $worker)->first();
+        $worker = $request->user()->workers()->where('id', $worker)->first();
 
-    	if(is_null($worker)){
-    		return failure([], 404);
-    	}
+        if (is_null($worker)) {
+            return failure([], 404);
+        }
 
-    	$worker->delete();
+        $worker->delete();
 
-    	return success([]);
+        return success([]);
     }
 }

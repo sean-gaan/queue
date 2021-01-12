@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\LogoutAllController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\JobController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,14 +25,14 @@ use App\Http\Controllers\JobController;
 Route::post('/register', [ RegisterController::class, 'store' ]);
 Route::post('/login', [ LoginController::class, 'store' ]);
 
-Route::middleware('auth:sanctum')->group(function(){
-	Route::post('/logout', [ LogoutController::class, 'store' ]);
-	Route::get('/user', [ UserController::class, 'show' ]);
-	Route::patch('/user', [ UserController::class, 'update' ]);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [ LogoutController::class, 'store' ]);
+    Route::get('/user', [ UserController::class, 'show' ]);
+    Route::patch('/user', [ UserController::class, 'update' ]);
 
-	Route::apiResources([
-		'collections' => CollectionController::class,
-		'workers' => WorkerController::class,
-		'jobs' => JobController::class
-	]);
+    Route::apiResources([
+        'collections' => CollectionController::class,
+        'workers' => WorkerController::class,
+        'jobs' => JobController::class
+    ]);
 });

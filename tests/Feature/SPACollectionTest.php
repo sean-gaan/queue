@@ -14,7 +14,8 @@ class SPACollectionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function an_authenticated_user_can_see_a_list_of_their_collections(){
+    public function an_authenticated_user_can_see_a_list_of_their_collections()
+    {
         // Set up the test
         $user = signIn();
         $collections = Collection::factory()->count(3)->create(['creator_id' => $user->id]);
@@ -23,13 +24,14 @@ class SPACollectionTest extends TestCase
         $response = $this->json('GET', 'api/collections');
 
         // Check the results
-        foreach($collections as $collection){
+        foreach ($collections as $collection) {
             $response->assertSee($collection->name);
         }
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_see_anyone_elses_collections(){
+    public function an_authenticated_user_cannot_see_anyone_elses_collections()
+    {
         // Set up the test
         $unauthenticated_user = User::factory()->create();
         $unauthenticated_collections = Collection::factory()->count(3)->create(['creator_id' => $unauthenticated_user->id]);
@@ -39,13 +41,14 @@ class SPACollectionTest extends TestCase
         $response = $this->json('GET', 'api/collections');
 
         // Check the results
-        foreach($unauthenticated_collections as $collection){
+        foreach ($unauthenticated_collections as $collection) {
             $response->assertDontSee($collection->name);
         }
     }
 
     /** @test */
-    public function an_authenticated_user_can_see_the_specific_details_of_one_collection(){
+    public function an_authenticated_user_can_see_the_specific_details_of_one_collection()
+    {
         // Set up the test
         $user = signIn();
         $collection = Collection::factory()->create(['creator_id' => $user->id]);
@@ -58,7 +61,8 @@ class SPACollectionTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_see_the_specific_details_of_someone_elses_collection(){
+    public function an_authenticated_user_cannot_see_the_specific_details_of_someone_elses_collection()
+    {
         // Set up the test
         $user = signIn();
         $unauthenticated_user = User::factory()->create();
@@ -101,7 +105,8 @@ class SPACollectionTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_update_their_own_collection(){
+    public function an_authenticated_user_can_update_their_own_collection()
+    {
         // Set up the test
         $user = signIn();
         $collection = Collection::factory()->create(['creator_id' => $user->id]);
@@ -115,7 +120,8 @@ class SPACollectionTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_update_anyone_elses_collection(){
+    public function an_authenticated_user_cannot_update_anyone_elses_collection()
+    {
         // Set up the test
         $collection = Collection::factory()->create();
         $user = signIn();
@@ -130,7 +136,8 @@ class SPACollectionTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_remove_their_own_collection(){
+    public function an_authenticated_user_can_remove_their_own_collection()
+    {
         // Set up the test
         $user = signIn();
         $collection = Collection::factory()->create(['creator_id' => $user->id]);
@@ -143,7 +150,8 @@ class SPACollectionTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_remove_someone_elses_collection(){
+    public function an_authenticated_user_cannot_remove_someone_elses_collection()
+    {
         // Set up the test
         $collection = Collection::factory()->create();
         $user = signIn();

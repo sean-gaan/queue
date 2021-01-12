@@ -14,7 +14,8 @@ class SPAWorkerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function an_authenticated_user_can_see_a_list_of_their_workers(){
+    public function an_authenticated_user_can_see_a_list_of_their_workers()
+    {
         // Set up the test
         $user = signIn();
         $workers = Worker::factory()->count(3)->create(['owner_id' => $user->id]);
@@ -23,13 +24,14 @@ class SPAWorkerTest extends TestCase
         $response = $this->json('GET', 'api/workers');
 
         // Check the results
-        foreach($workers as $worker){
+        foreach ($workers as $worker) {
             $response->assertSee($worker->name);
         }
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_see_anyone_elses_workers(){
+    public function an_authenticated_user_cannot_see_anyone_elses_workers()
+    {
         // Set up the test
         $unauthenticated_user = User::factory()->create();
         $unauthenticated_workers = Worker::factory()->count(3)->create(['owner_id' => $unauthenticated_user->id]);
@@ -39,13 +41,14 @@ class SPAWorkerTest extends TestCase
         $response = $this->json('GET', 'api/workers');
 
         // Check the results
-        foreach($unauthenticated_workers as $worker){
+        foreach ($unauthenticated_workers as $worker) {
             $response->assertDontSee($worker->name);
         }
     }
 
     /** @test */
-    public function an_authenticated_user_can_see_the_specific_details_of_one_worker(){
+    public function an_authenticated_user_can_see_the_specific_details_of_one_worker()
+    {
         // Set up the test
         $user = signIn();
         $worker = Worker::factory()->create(['owner_id' => $user->id]);
@@ -58,7 +61,8 @@ class SPAWorkerTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_see_the_specific_details_of_someone_elses_worker(){
+    public function an_authenticated_user_cannot_see_the_specific_details_of_someone_elses_worker()
+    {
         // Set up the test
         $user = signIn();
         $unauthenticated_user = User::factory()->create();
@@ -101,7 +105,8 @@ class SPAWorkerTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_update_their_own_worker(){
+    public function an_authenticated_user_can_update_their_own_worker()
+    {
         // Set up the test
         $user = signIn();
         $worker = Worker::factory()->create(['owner_id' => $user->id]);
@@ -115,7 +120,8 @@ class SPAWorkerTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_update_anyone_elses_worker(){
+    public function an_authenticated_user_cannot_update_anyone_elses_worker()
+    {
         // Set up the test
         $worker = Worker::factory()->create();
         $user = signIn();
@@ -130,7 +136,8 @@ class SPAWorkerTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_remove_their_own_worker(){
+    public function an_authenticated_user_can_remove_their_own_worker()
+    {
         // Set up the test
         $user = signIn();
         $worker = Worker::factory()->create(['owner_id' => $user->id]);
@@ -143,7 +150,8 @@ class SPAWorkerTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_remove_someone_elses_worker(){
+    public function an_authenticated_user_cannot_remove_someone_elses_worker()
+    {
         // Set up the test
         $worker = Worker::factory()->create();
         $user = signIn();

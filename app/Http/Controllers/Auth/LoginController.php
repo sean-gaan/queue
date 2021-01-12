@@ -26,7 +26,8 @@ class LoginController extends Controller
         $this->middleware(['web']);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();

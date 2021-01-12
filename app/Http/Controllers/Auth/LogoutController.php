@@ -24,7 +24,8 @@ class LogoutController extends Controller
         $this->middleware(['web']);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         Auth::guard('web')->logout();
         return success([]);
     }
