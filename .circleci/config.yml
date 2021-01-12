@@ -21,6 +21,10 @@ jobs:
     steps:
       - checkout
 
+      - add_ssh_keys:
+          fingerprints:
+            - "64:7d:5a:39:a1:6f:7a:b1:be:f1:22:ec:76:ad:67:e9"
+
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
 
@@ -42,12 +46,12 @@ jobs:
       - run: cp .env.example .env
       - run: php artisan key:generate
 
-      run: ./vendor/bin/php-cs-fixer fix .
-      run: git config user.email "noreply@gaan.dev"
-      run: git config user.name "CircleCI"
-      run: git add .
-      run: git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
-      run: git push
+      - run: ./vendor/bin/php-cs-fixer fix .
+      - run: git config user.email "noreply@gaan.dev"
+      - run: git config user.name "CircleCI"
+      - run: git add .
+      - run: git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
+      - run: git push
 
       # run tests with phpunit or codecept
       - run:
