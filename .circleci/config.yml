@@ -42,6 +42,8 @@ jobs:
       - run: cp .env.example .env
       - run: php artisan key:generate
 
+      run: ./vendor/bin/php-cs-fixer fix .
+
       # run tests with phpunit or codecept
       - run:
           command: |
