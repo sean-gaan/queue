@@ -93,12 +93,12 @@ jobs:
 
 workflows:
   version: 2
-    - fix_and_test:
-      jobs:
-        - fix:
-          filters:
-            branches:
-              ignore:
-                - master
-                - staging
-        - test
+  fix_and_test:
+    jobs:
+      - fix:
+        filters:
+          branches:
+            ignore:
+              - master
+              - staging
+      - test
