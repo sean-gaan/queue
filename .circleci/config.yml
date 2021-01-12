@@ -2,28 +2,17 @@
 #
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
-version: 2
 jobs:
-  build:
+  fix:
     docker:
-      # Specify the version you desire here
       - image: circleci/php:7.4-node-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # Using the RAM variation mitigates I/O contention
-      # for database intensive operations.
-      # - image: circleci/mysql:5.7-ram
-      #
-      # - image: redis:2.8.19
 
     steps:
       - checkout
 
       - add_ssh_keys:
-          fingerprints:
-            - "64:7d:5a:39:a1:6f:7a:b1:be:f1:22:ec:76:ad:67:e9"
+        fingerprints:
+          - "64:7d:5a:39:a1:6f:7a:b1:be:f1:22:ec:76:ad:67:e9"
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
@@ -53,6 +42,44 @@ jobs:
       - run: git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
       - run: git push --set-upstream origin ${CIRCLE_BRANCH}
 
+  test:
+    docker:
+      # Specify the version you desire here
+      - image: circleci/php:7.4-node-browsers
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # Using the RAM variation mitigates I/O contention
+      # for database intensive operations.
+      # - image: circleci/mysql:5.7-ram
+      #
+      # - image: redis:2.8.19
+
+    steps:
+      - checkout
+
+      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo docker-php-ext-install zip
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: composer install -n --prefer-dist
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+      # prepare the database
+      - run: cp .env.example .env
+      - run: php artisan key:generate
+
       # run tests with phpunit or codecept
       - run:
           command: |
@@ -64,5 +91,14 @@ jobs:
       - store_artifacts:
           path: ~/phpunit
 
-      # - run: ./vendor/bin/phpunit
-      # - store_test_results:
+workflows:
+  version: 2
+    fix_and_test:
+      jobs:
+        - fix:
+          filters:
+            branches:
+              ignore:
+                - master
+                - staging
+        - test
