@@ -51,7 +51,7 @@ jobs:
       - run: git config user.name "CircleCI"
       - run: git add .
       - run: git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
-      - run: git push
+      - run: git push --set-upstream origin ${CIRCLE_BRANCH}
 
       # run tests with phpunit or codecept
       - run:
