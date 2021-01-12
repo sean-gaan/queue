@@ -41,10 +41,10 @@ jobs:
             git config user.email "noreply@gaan.dev"
             git config user.name "CircleCI"
             git add .
-            git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
-            if git push --set-upstream origin ${CIRCLE_BRANCH}
+            if git commit -m "CIRCLECI:Fixed Coding Standards. [skip ci]"
               exit 0
             fi
+            git push --set-upstream origin ${CIRCLE_BRANCH}
 
   test:
     docker:
