@@ -22,6 +22,7 @@ class CreateJobsTable extends Migration
             $table->unsignedInteger('uploader_id')->nullable()->default(null);
             $table->unsignedInteger('collection_id')->nullable()->default(null);
             $table->unsignedInteger('worker_id')->nullable()->default(null);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

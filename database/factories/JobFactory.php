@@ -34,7 +34,7 @@ class JobFactory extends Factory
             'collection_id' => function() use ($user){
                 return Collection::factory()->create(['creator_id' => $user]);
             },
-            'start_at' => $this->faker->dateTimeBetween(Carbon::now(), Carbon::now()->addWeek(1))
+            'start_at' => $this->faker->dateTimeBetween(Carbon::now(), Carbon::now()->addWeek(1)),
         ];
     }
 }
